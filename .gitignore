@@ -1,0 +1,44 @@
+# Model files (too large for git)
+*.h5
+*.keras
+*.pkl
+
+# Dataset directories (too large)
+COVID-19_Radiography_Dataset/
+chest_xray/
+dataset/
+tiny_dataset/
+small_dataset/
+
+# Uploads directory
+uploads/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp 
