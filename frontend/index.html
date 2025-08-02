@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DiagnoBot - AI Health Chat</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <div class="menu-icon">☰</div>
+      <span>DiagnoBot</span>
+    </div>
+    <div class="auth-buttons">
+      <button class="btn btn-outline">Sign Up</button>
+      <button class="btn btn-primary">Log In</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <h1 class="hero-title">
+        Welcome to<br>
+        <span>your AI Health Chat</span>
+      </h1>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <div class="features-container">
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🌱</div>
+            <h3 class="feature-title">Revolutionary Product</h3>
+            <p class="feature-subtitle">Your Personal AI Health Assistant, 24/7.</p>
+            <p class="feature-description">
+              Skip the wait for appointments and stop searching symptoms online. Our AI health assistance chat offers instant, accurate symptom checking, personalized recommendations for medical tests, and detailed treatment plans – all created and validated by our team of experienced doctors and engineers.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3 class="feature-title">AI Validated by Doctors</h3>
+            <p class="feature-subtitle">Machine Learning Meets Medicine.</p>
+            <p class="feature-description">
+              Our chatbot uses LLMs fine-tuned on real medical data, patient-doctor conversations, and medical protocols. Our custom-built AI system understands your symptoms and provides accurate, up-to-date medical advice. Every recommendation, treatment plan, and test is validated by medical professionals.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">💎</div>
+            <h3 class="feature-title">The Value you Get</h3>
+            <p class="feature-subtitle">Get an AI-Backed Second Opinion.</p>
+            <p class="feature-description">
+              With our health assistant, you save both time and money. Avoid unnecessary doctor visits and high medical bills by getting answers to your health questions immediately. Not sure about a diagnosis or treatment plan? Use our AI health chat to get a second opinion.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <h2 class="cta-title">Try AI Health Chat Now</h2>
+      <button class="cta-button" onclick="scrollToChat()">Upgrade Your Plan</button>
+    </section>
+
+    <!-- Chat Interface -->
+    <section class="chat-section" id="chat-section">
+      <h2 class="chat-title">AI Medical Image Analysis</h2>
+      
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">📁</div>
+        <div class="upload-text">Drag & Drop your medical image here</div>
+        <div class="upload-hint">or click to browse files</div>
+        <input type="file" id="fileInput" class="file-input" accept="image/*">
+      </div>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Analyzing your image with AI...</p>
+      </div>
+
+      <div class="results-section" id="resultsSection">
+        <div class="result-card">
+          <h3 class="result-title">AI Diagnosis Result</h3>
+          <div class="result-confidence" id="resultConfidence">85%</div>
+          <div class="result-description" id="resultDescription">
+            Based on the analysis of your medical image, our AI has identified potential findings.
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-container">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type or share photo">
+        <div class="chat-actions">
+          <span style="color: #b2bec3; font-size: 0.9rem;">+ attach</span>
+          <button class="action-btn">🎤</button>
+          <button class="action-btn send-btn" onclick="sendMessage()">↑</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        © 2025 DiagnoBot.ai All Rights Reserved.
+      </div>
+      <div class="footer-center">
+        <select class="language-selector">
+          <option>Eng</option>
+          <option>Esp</option>
+          <option>Fra</option>
+        </select>
+      </div>
+      <div class="footer-right">
+        <a href="#" class="footer-link">Homepage</a>
+        <a href="#" class="footer-link">About Us</a>
+        <a href="#" class="footer-link">Terms of Use</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // File upload functionality
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const loading = document.getElementById('loading');
+    const resultsSection = document.getElementById('resultsSection');
+    const resultConfidence = document.getElementById('resultConfidence');
+    const resultDescription = document.getElementById('resultDescription');
+
+    // Drag and drop functionality
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleFile(files[0]);
+      }
+    });
+
+    uploadArea.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleFile(e.target.files[0]);
+      }
+    });
+
+    async function handleFile(file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      // Show loading
+      loading.style.display = 'block';
+      resultsSection.style.display = 'none';
+
+      try {
+        const response = await fetch('/predict', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        // Hide loading and show results
+        loading.style.display = 'none';
+        resultsSection.style.display = 'block';
+
+        if (result.success) {
+          const prediction = result.prediction;
+          const confidence = Math.round(prediction.confidence * 100);
+          
+          resultConfidence.textContent = `${confidence}%`;
+          resultDescription.textContent = `AI Diagnosis: ${prediction.class} - ${prediction.description}`;
+        } else {
+          resultConfidence.textContent = 'Error';
+          resultDescription.textContent = 'Unable to analyze image. Please try again.';
+        }
+      } catch (error) {
+        loading.style.display = 'none';
+        resultsSection.style.display = 'block';
+        resultConfidence.textContent = 'Error';
+        resultDescription.textContent = 'Network error. Please check your connection.';
+      }
+    }
+
+    // Chat functionality
+    const chatInput = document.getElementById('chatInput');
+
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    async function sendMessage() {
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      try {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message })
+        });
+
+        const result = await response.json();
+        
+        // For now, just show the response in the results section
+        resultsSection.style.display = 'block';
+        resultConfidence.textContent = 'AI Response';
+        resultDescription.textContent = result.response;
+        
+        chatInput.value = '';
+      } catch (error) {
+        console.error('Error sending message:', error);
+      }
+    }
+
+    // Smooth scroll to chat section
+    function scrollToChat() {
+      document.getElementById('chat-section').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  </script>
+</body>
+</html>

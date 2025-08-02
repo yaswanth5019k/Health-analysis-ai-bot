@@ -1,0 +1,15 @@
+{
+  "name": "medical-ai-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Medical AI Diagnostic Assistant",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 3000",
+    "build": "echo 'Static HTML build complete'"
+  },
+  "keywords": ["medical", "ai", "diagnostic", "frontend"],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+} 
