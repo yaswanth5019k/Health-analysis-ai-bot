@@ -1,0 +1,53 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Medical Diagnosis Chatbot</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    #chat { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; }
+    #chat div { margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <h2>🩺 AI Diagnostic Assistant</h2>
+  <div id="chat"></div>
+  <input type="file" id="imageInput" />
+  <button onclick="sendImage()">Upload and Diagnose</button>
+
+  <script>
+    const chat = document.getElementById("chat");
+
+    function appendMessage(sender, text) {
+      const message = document.createElement("div");
+      message.textContent = `${sender}: ${text}`;
+      chat.appendChild(message);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    async function sendImage() {
+      const input = document.getElementById("imageInput");
+      const file = input.files[0];
+      if (!file) return alert("Please select an image.");
+
+      appendMessage("User", "Uploading image...");
+
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const res = await fetch("http://localhost:5000/predict", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+      if (data.error) {
+        appendMessage("Bot", `Error: ${data.error}`);
+      } else {
+        appendMessage("Bot", `Diagnosis: ${data.diagnosis} (Confidence: ${data.confidence})`);
+      }
+    }
+  </script>
+</body>
+</html>
