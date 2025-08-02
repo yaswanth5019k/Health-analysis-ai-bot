@@ -27,8 +27,8 @@ except FileNotFoundError:
 except Exception as e:
     print(f"⚠️  Error loading model: {e}. Using mock predictions for demonstration.")
 
-# Define class labels
-labels = ["Normal", "Pneumonia", "COVID-19", "Fracture"]  # Example classes
+# Define class labels - must match the order used during training
+labels = ["COVID-19", "Normal", "Pneumonia"]  # Match the training order
 
 def preprocess_image(img_path):
     """
