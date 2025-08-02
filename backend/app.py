@@ -62,7 +62,8 @@ def predict():
     Endpoint to receive an image and return AI-generated diagnosis in a conversational format.
     """
     if "image" not in request.files:
-        return jsonify({"response": "Please upload a medical image (X-ray, MRI, CT scan) to get a diagnosis."}), 400
+        return jsonify({"success": False, "error": "Please upload a medical image (X-ray, MRI, CT scan) to get a diagnosis."}), 400
+    
     file = request.files["image"]
     img_path = os.path.join("uploads", file.filename)
     file.save(img_path)
@@ -80,15 +81,19 @@ def predict():
         
         diagnosis = labels[class_idx]
 
-        # Conversational response
+        # Return response format that frontend expects
         response = {
-            "response": f"Based on the uploaded image, the AI suggests: {diagnosis} (Confidence: {confidence * 100:.2f}%).",
-            "diagnosis": diagnosis,
-            "confidence": f"{confidence * 100:.2f}%"
+            "success": True,
+            "prediction": {
+                "class": diagnosis,
+                "confidence": confidence,
+                "description": f"AI detected {diagnosis} with {confidence * 100:.2f}% confidence"
+            },
+            "response": f"Based on the uploaded image, the AI suggests: {diagnosis} (Confidence: {confidence * 100:.2f}%)."
         }
         return jsonify(response)
     except Exception as e:
-        return jsonify({"response": f"An error occurred: {str(e)}"}), 500
+        return jsonify({"success": False, "error": f"An error occurred: {str(e)}"}), 500
 
 
 # Placeholder for future chatbot/conversation features
@@ -104,8 +109,8 @@ if __name__ == "__main__":
     os.makedirs("uploads", exist_ok=True)
     # Run the Flask app
     print("🚀 Starting Medical AI Bot...")
-    print("📱 Frontend will be available at: http://localhost:5001")
+    print("📱 Frontend will be available at: http://localhost:5003")
     print("🔧 API endpoints:")
     print("   - POST /predict - Upload medical images for diagnosis")
     print("   - POST /chat - Chat with the AI (coming soon)")
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=True, host='0.0.0.0', port=5003)

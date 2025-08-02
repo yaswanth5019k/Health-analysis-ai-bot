@@ -197,15 +197,32 @@
           
           resultConfidence.textContent = `${confidence}%`;
           resultDescription.textContent = `AI Diagnosis: ${prediction.class} - ${prediction.description}`;
+          
+          // Add color coding based on diagnosis
+          if (prediction.class === 'COVID-19') {
+            resultConfidence.style.color = '#e74c3c';
+            resultDescription.style.color = '#e74c3c';
+          } else if (prediction.class === 'Pneumonia') {
+            resultConfidence.style.color = '#f39c12';
+            resultDescription.style.color = '#f39c12';
+          } else {
+            resultConfidence.style.color = '#27ae60';
+            resultDescription.style.color = '#27ae60';
+          }
         } else {
           resultConfidence.textContent = 'Error';
-          resultDescription.textContent = 'Unable to analyze image. Please try again.';
+          resultDescription.textContent = result.error || 'Unable to analyze image. Please try again.';
+          resultConfidence.style.color = '#e74c3c';
+          resultDescription.style.color = '#e74c3c';
         }
       } catch (error) {
+        console.error('Error:', error);
         loading.style.display = 'none';
         resultsSection.style.display = 'block';
         resultConfidence.textContent = 'Error';
         resultDescription.textContent = 'Network error. Please check your connection.';
+        resultConfidence.style.color = '#e74c3c';
+        resultDescription.style.color = '#e74c3c';
       }
     }
 
