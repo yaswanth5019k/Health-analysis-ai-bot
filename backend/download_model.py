@@ -3,8 +3,9 @@ import requests
 from tensorflow.keras.models import load_model
 
 # You can host your model.h5 file on Google Drive, Dropbox, or any file hosting service
-# For now, we'll use a placeholder URL - you need to replace this with your actual model URL
-MODEL_URL = 'https://drive.google.com/uc?export=download&id=YOUR_MODEL_FILE_ID'  # Replace with your actual URL
+# Replace this URL with your actual model.h5 file URL
+# For now, we'll use mock predictions until you host your model file
+MODEL_URL = 'https://drive.google.com/uc?export=download&id=YOUR_ACTUAL_FILE_ID'  # Replace with your actual URL
 MODEL_PATH = 'model.h5'
 
 def download_model():
