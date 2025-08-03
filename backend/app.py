@@ -199,10 +199,12 @@ def health_check():
 if __name__ == "__main__":
     # Ensure uploads directory exists
     os.makedirs("uploads", exist_ok=True)
+    # Get port from environment variable (for Render) or use default
+    port = int(os.environ.get('PORT', 5003))
     # Run the Flask app
     print("🚀 Starting Medical AI Bot...")
-    print("📱 Frontend will be available at: http://localhost:5003")
+    print(f"📱 Frontend will be available at: http://localhost:{port}")
     print("🔧 API endpoints:")
     print("   - POST /predict - Upload medical images for diagnosis")
     print("   - POST /chat - Chat with the AI (coming soon)")
-    app.run(debug=True, host='0.0.0.0', port=5003)
+    app.run(debug=False, host='0.0.0.0', port=port)
