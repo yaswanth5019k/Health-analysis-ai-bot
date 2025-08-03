@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: medical-ai-backend
+    env: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && python app.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: GEMINI_API_KEY
+        value: AIzaSyBeFjOd6RdDmD83kmRKkMSLaOgvEx5yKfg
+    healthCheckPath: /health
+    autoDeploy: true 

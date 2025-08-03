@@ -195,6 +195,11 @@ def chat():
     
     return jsonify({"response": response})
 
+# Health check endpoint for deployment
+@app.route("/health", methods=["GET"])
+def health_check():
+    return jsonify({"status": "healthy", "message": "Medical AI Bot is running!"}), 200
+
 if __name__ == "__main__":
     # Ensure uploads directory exists
     os.makedirs("uploads", exist_ok=True)

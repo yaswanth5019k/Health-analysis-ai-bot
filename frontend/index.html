@@ -180,7 +180,7 @@
       resultsSection.style.display = 'none';
 
       try {
-        const response = await fetch('/predict', {
+        const response = await fetch(`${API_BASE_URL}/predict`, {
           method: 'POST',
           body: formData
         });
@@ -241,6 +241,9 @@
       }
     }
 
+    // Get API base URL from environment or use localhost for development
+    const API_BASE_URL = window.location.hostname === 'localhost' ? '' : 'https://your-render-backend-url.onrender.com';
+    
     // Chat functionality
     const chatInput = document.getElementById('chatInput');
 
@@ -255,7 +258,7 @@
       if (!message) return;
 
       try {
-        const response = await fetch('/chat', {
+        const response = await fetch(`${API_BASE_URL}/chat`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
