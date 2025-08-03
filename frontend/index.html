@@ -198,22 +198,34 @@
           resultConfidence.textContent = `${confidence}%`;
           resultDescription.textContent = `AI Diagnosis: ${prediction.class} - ${prediction.description}`;
           
-          // Add color coding based on diagnosis
+          // Add color coding based on diagnosis with better contrast
           if (prediction.class === 'COVID-19') {
-            resultConfidence.style.color = '#e74c3c';
-            resultDescription.style.color = '#e74c3c';
+            resultConfidence.style.color = '#d63031';
+            resultDescription.style.color = '#d63031';
+            resultConfidence.style.textShadow = '0 0 10px rgba(214, 48, 49, 0.3)';
+            resultsSection.querySelector('.result-card').style.backgroundColor = '#fff5f5';
+            resultsSection.querySelector('.result-card').style.borderColor = '#d63031';
           } else if (prediction.class === 'Pneumonia') {
-            resultConfidence.style.color = '#f39c12';
-            resultDescription.style.color = '#f39c12';
+            resultConfidence.style.color = '#e17055';
+            resultDescription.style.color = '#e17055';
+            resultConfidence.style.textShadow = '0 0 10px rgba(225, 112, 85, 0.3)';
+            resultsSection.querySelector('.result-card').style.backgroundColor = '#fff8f0';
+            resultsSection.querySelector('.result-card').style.borderColor = '#e17055';
           } else {
-            resultConfidence.style.color = '#27ae60';
-            resultDescription.style.color = '#27ae60';
+            resultConfidence.style.color = '#00b894';
+            resultDescription.style.color = '#00b894';
+            resultConfidence.style.textShadow = '0 0 10px rgba(0, 184, 148, 0.3)';
+            resultsSection.querySelector('.result-card').style.backgroundColor = '#f0fff4';
+            resultsSection.querySelector('.result-card').style.borderColor = '#00b894';
           }
         } else {
           resultConfidence.textContent = 'Error';
           resultDescription.textContent = result.error || 'Unable to analyze image. Please try again.';
-          resultConfidence.style.color = '#e74c3c';
-          resultDescription.style.color = '#e74c3c';
+          resultConfidence.style.color = '#d63031';
+          resultDescription.style.color = '#d63031';
+          resultConfidence.style.textShadow = '0 0 10px rgba(214, 48, 49, 0.3)';
+          resultsSection.querySelector('.result-card').style.backgroundColor = '#fff5f5';
+          resultsSection.querySelector('.result-card').style.borderColor = '#d63031';
         }
       } catch (error) {
         console.error('Error:', error);
@@ -221,8 +233,11 @@
         resultsSection.style.display = 'block';
         resultConfidence.textContent = 'Error';
         resultDescription.textContent = 'Network error. Please check your connection.';
-        resultConfidence.style.color = '#e74c3c';
-        resultDescription.style.color = '#e74c3c';
+        resultConfidence.style.color = '#d63031';
+        resultDescription.style.color = '#d63031';
+        resultConfidence.style.textShadow = '0 0 10px rgba(214, 48, 49, 0.3)';
+        resultsSection.querySelector('.result-card').style.backgroundColor = '#fff5f5';
+        resultsSection.querySelector('.result-card').style.borderColor = '#d63031';
       }
     }
 
