@@ -265,10 +265,15 @@
 
         const result = await response.json();
         
-        // For now, just show the response in the results section
+        // Show the chat response in the results section with better formatting
         resultsSection.style.display = 'block';
-        resultConfidence.textContent = 'AI Response';
+        resultConfidence.textContent = 'AI Medical Assistant';
         resultDescription.textContent = result.response;
+        resultConfidence.style.color = '#6c5ce7';
+        resultDescription.style.color = '#333';
+        resultConfidence.style.textShadow = '0 0 10px rgba(108, 92, 231, 0.3)';
+        resultsSection.querySelector('.result-card').style.backgroundColor = '#f8f9ff';
+        resultsSection.querySelector('.result-card').style.borderColor = '#6c5ce7';
         
         chatInput.value = '';
       } catch (error) {
