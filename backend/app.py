@@ -35,15 +35,11 @@ def serve_static(path):
     return send_from_directory('../frontend', path)
 
 
+# Import model download functionality
+from download_model import load_model_safely
+
 # Load pre-trained model or use mock model
-model = None
-try:
-    model = load_model("model.h5")
-    print("✅ Model loaded successfully!")
-except FileNotFoundError:
-    print("⚠️  Model file 'model.h5' not found. Using mock predictions for demonstration.")
-except Exception as e:
-    print(f"⚠️  Error loading model: {e}. Using mock predictions for demonstration.")
+model = load_model_safely()
 
 # Define class labels - must match the order used during training
 labels = ["COVID-19", "Normal", "Pneumonia"]  # Match the training order

@@ -37,6 +37,11 @@ This guide will help you deploy your Medical AI Bot with frontend on Vercel and 
      GEMINI_API_KEY = AIzaSyBeFjOd6RdDmD83kmRKkMSLaOgvEx5yKfg
      ```
 
+5. **Host Your Model File**
+   - Follow the instructions in `MODEL_HOSTING.md`
+   - Upload your `model.h5` to Google Drive or another hosting service
+   - Update the `MODEL_URL` in `backend/download_model.py` with your actual URL
+
 5. **Deploy**
    - Click "Create Web Service"
    - Wait for deployment to complete
