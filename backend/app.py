@@ -14,10 +14,10 @@ CORS(app)  # Enable CORS for frontend-backend communication
 
 # Configure Google Gemini AI
 try:
-    # You'll need to get a free API key from: https://makersuite.google.com/app/apikey
-    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', 'your-api-key-here')
+    # Using the working API key provided by user
+    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', 'AIzaSyBeFjOd6RdDmD83kmRKkMSLaOgvEx5yKfg')
     genai.configure(api_key=GEMINI_API_KEY)
-    gemini_model = genai.GenerativeModel('gemini-1.5-flash')
+    gemini_model = genai.GenerativeModel('gemini-2.0-flash')
     GEMINI_AVAILABLE = True
     print("✅ Google Gemini AI configured successfully!")
 except Exception as e:
